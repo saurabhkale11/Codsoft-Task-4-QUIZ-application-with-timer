@@ -1,1 +1,1 @@
-# Codsoft-Task-4-QUIZ-application-with-timer
+# Codsoft-Task-4-QUIZ-Application-with-timer
