@@ -1,0 +1,65 @@
+import time
+
+class Quiz:
+    def __init__(self, questions):
+        self.questions = questions
+        self.score = 0
+
+    def run_quiz(self):
+        for question_data in self.questions:
+            self.display_question(question_data)
+            start_time = time.time()
+            while True:
+                try:
+                    time_left = 10 - (time.time() - start_time) 
+                    if time_left <= 0:
+                        print("\nTime's up!")
+                        break  
+                    print(f"Time left: {int(time_left)} seconds", end="\r") 
+                    choice = input()
+                    if choice in ['1', '2', '3', '4']:
+                        break 
+                except KeyboardInterrupt: 
+                    print("\nQuiz interrupted.")
+                    return
+                except ValueError:
+                    print("Invalid input. Please enter 1, 2, 3, or 4.")
+            
+            if time_left > 0: 
+                if choice == question_data["correct_answer"]:
+                    print("Correct!")
+                    self.score += 1
+                else:
+                    print(f"Incorrect. The correct answer was {question_data['options'][question_data['correct_answer']-1]}.")
+            else: 
+                print(f"The correct answer was {question_data['options'][question_data['correct_answer']-1]}.")
+
+        self.display_result()
+
+    def display_question(self, question_data):
+        print("\n" + question_data["question"])
+        for i, option in enumerate(question_data["options"]):
+            print(f"{i+1}. {option}")
+
+    def display_result(self):
+        print("\n--- Quiz Results ---")
+        print(f"Final Score: {self.score} / {len(self.questions)}")
+ 
+
+
+questions = [
+    {
+        "question": "who is the pm of india?",
+        "options": ["modi", "trump", "singh", "yadav"],
+        "correct_answer": 2  
+    },
+    {
+        "question": "which year covid enter in india?",
+        "options": ["2015", "2016", "2017", "2019"],
+        "correct_answer": 2  
+    },
+    
+]
+
+quiz = Quiz(questions)
+quiz.run_quiz()
